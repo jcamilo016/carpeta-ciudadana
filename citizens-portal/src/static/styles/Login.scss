@@ -1,0 +1,57 @@
+.login-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 100vh;
+    gap: 1rem;
+
+    .image-container {
+        flex-basis: 60%;
+        background: url('images/people.svg') bottom center no-repeat;
+        background-size: auto 30rem;
+    }
+
+    .form-container {
+        flex-basis: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        h2 {
+            color: #1976d2;
+            display: flex;
+            font-size: 2.5rem;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5rem;
+        }
+
+        .login-form-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            align-content: space-between;
+
+            & > div {
+                margin-bottom: 30px;
+                width: 350px;
+            }
+
+            .create-button {
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+        }
+
+        .sign-up-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 2rem;
+            cursor: pointer;
+        }
+    }
+}
