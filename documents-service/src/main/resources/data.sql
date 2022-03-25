@@ -1,0 +1,8 @@
+INSERT INTO public.citizen (cid, name, address, email, operatorid, operatorname, password) VALUES (1130600982, 'Armando Casas', 'Cra 54 # 45 -67', 'jcamilo016@gmail.com', 1, 'Operador Ciudadano', '123456');
+INSERT INTO public.citizen (cid, name, address, email, operatorid, operatorname, password) VALUES (1130600983, 'Rodolfo Perez', 'Cra 54 # 45 -67', 'jcamilo016@gmail.com', 1, 'Operador Ciudadano', '123456');
+INSERT INTO public.citizen (cid, name, address, email, operatorid, operatorname, password) VALUES (1130600978, 'Juan Acosta', 'Cra 54 # 45 -67', 'jcamilo016@gmail.com', 1, 'Operador Ciudadano', '123456');
+INSERT INTO public.citizen (cid, name, address, email, operatorid, operatorname, password) VALUES (1036618054, 'Miguel Camacho', 'Cra 54 # 45 -67', 'mrcamachog@eafit.edu.co', 1, 'Operador Ciudadano', '123456');
+INSERT INTO public.citizen (cid, name, address, email, operatorid, operatorname, password) VALUES (1130600975, 'Juan Perez', 'Cra 54 # 45 -67', 'jperez@gmail.com', 1, 'Operador Ciudadano', '123456');
+
+INSERT INTO public.files (id, data, name, type, citizenid) VALUES ('8c030340-98fb-440f-bd7d-b5fd03df3b69', 16600, '3-Actividad-análisis-STRIDE.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 1130600982);
+INSERT INTO public.files (id, data, name, type, citizenid) VALUES ('9dd95db1-e4ef-4db8-a627-b33ef9fd7d18', 16601, 'svn_repositories.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 1036618054);
