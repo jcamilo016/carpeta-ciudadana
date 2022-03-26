@@ -8,6 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface CitizenMapper {
 
-    @Mapping(source="id", target = "id")
+    @Mapping(source="citizenId", target = "id")
     Citizen citizenDBtoCitizen(CitizenDB citizenDB);
 }

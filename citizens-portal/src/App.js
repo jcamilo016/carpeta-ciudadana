@@ -1,37 +1,42 @@
-import './static/styles/App.scss';
-import './static/styles/Login.scss';
+import {useState} from "react";
 import {
     BrowserRouter,
     Routes,
     Route,
 } from "react-router-dom";
-import Menu from "./components/Menu";
+import Menu from "./pages/Menu";
 import Login from "./pages/Login";
-import LoginForm from "./components/LoginForm";
-import RegisterForm from "./components/RegisterForm";
+import {LoginForm, RegisterForm } from "./components";
+import {LoginContext} from "./contexts/LoginContext";
+import './static/styles/App.scss';
+import './static/styles/Login.scss';
 
 function App() {
+    const [loginInfo, setLogin] = useState({isLogged: false, citizen: null});
+
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={
-                    <Login>
-                        <LoginForm/>
-                    </Login>
-                }/>
-                <Route path="portal" element={<Menu/>}/>
-                <Route path="signup" element={
-                    <Login>
-                        <RegisterForm />
-                    </Login>
-                }/>
-                <Route path="*" element={
-                    <Login>
-                        <LoginForm/>
-                    </Login>
-                }/>
-            </Routes>
-        </BrowserRouter>
+        <LoginContext.Provider value={{...loginInfo, setLogin}}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={
+                        <Login>
+                            <LoginForm/>
+                        </Login>
+                    }/>
+                    <Route path="portal" element={<Menu/>}/>
+                    <Route path="signup" element={
+                        <Login>
+                            <RegisterForm />
+                        </Login>
+                    }/>
+                    <Route path="*" element={
+                        <Login>
+                            <LoginForm/>
+                        </Login>
+                    }/>
+                </Routes>
+            </BrowserRouter>
+        </LoginContext.Provider>
     );
 }
 

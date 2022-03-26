@@ -1,6 +1,7 @@
 package com.vobi.bank.controller;
 
 import com.vobi.bank.dto.Citizen;
+import com.vobi.bank.dto.LoginRequest;
 import com.vobi.bank.model.CitizenDB;
 import com.vobi.bank.service.CitizensService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,16 +36,16 @@ public class CitizensController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @Operation(summary = "Validacion de un Ciudadano para la inscripcion en un operador de carpeta ciudadana.")
+    @Operation(summary = "Validación de un Ciudadano para la inscripción en un operador de carpeta ciudadana.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK"),
             @ApiResponse(responseCode = "204", description = "Not Content"),
             @ApiResponse(responseCode = "500", description = "failed : Application Error.",
                     content = @Content)
     })
-    @GetMapping(value = "/validate/{id}")
-    public ResponseEntity<String> validateCitizen(@PathVariable("id") int id) throws Exception {
-        String response = citizensService.validateCitizen(id);
+    @PostMapping(value = "/validate")
+    public ResponseEntity<Citizen> validateCitizen(@Valid @RequestBody LoginRequest request) throws Exception {
+        Citizen response = citizensService.validateCitizen(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

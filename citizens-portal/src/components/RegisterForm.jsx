@@ -1,27 +1,38 @@
 import {useState} from "react";
 import {useFormik} from "formik";
-import {IconButton, InputAdornment, TextField} from '@mui/material';
+import {UsePost} from "../hooks";
+import {Alert, IconButton, InputAdornment, TextField} from '@mui/material';
 import FaceIcon from "@mui/icons-material/Face";
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import PhoneIcon from '@mui/icons-material/Phone';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import HomeIcon from '@mui/icons-material/Home';
+import BadgeIcon from '@mui/icons-material/Badge';
+import LoadingButton from "@mui/lab/LoadingButton";
+import PinIcon from '@mui/icons-material/Pin';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+
 
 function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
+    const [apiCall, response] = UsePost("/register", "citizens");
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
+
+    const onSubmitHandler = async (payload) => {
+        await apiCall(payload);
+    };
 
     const formik = useFormik({
         initialValues: {
             citizenId: "",
             name: "",
             address: "",
+            email: "",
             operatorId: "",
             operatorName: "",
             password: "",
         },
-        onSubmit: () => {},
+        onSubmit: onSubmitHandler,
     });
 
     return (
@@ -37,7 +48,7 @@ function RegisterForm() {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <FaceIcon />
+                                <PinIcon />
                             </InputAdornment>
                         ),
                     }}
@@ -49,7 +60,7 @@ function RegisterForm() {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <AccountCircle />
+                                <FaceIcon />
                             </InputAdornment>
                         ),
                     }}
@@ -61,7 +72,7 @@ function RegisterForm() {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <PhoneIcon />
+                                <HomeIcon />
                             </InputAdornment>
                         ),
                     }}
@@ -85,7 +96,7 @@ function RegisterForm() {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <AlternateEmailIcon />
+                                <PinIcon />
                             </InputAdornment>
                         ),
                     }}
@@ -97,7 +108,7 @@ function RegisterForm() {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <AlternateEmailIcon />
+                                <BadgeIcon />
                             </InputAdornment>
                         ),
                     }}
@@ -120,6 +131,19 @@ function RegisterForm() {
                         )
                     }}
                 />
+                {(response.error) && (
+                    <Alert severity="error">{`${response.error}`}</Alert>
+                )}
+                <LoadingButton
+                    variant="contained"
+                    size="large"
+                    className="create-button"
+                    type="submit"
+                    startIcon={<FactCheckIcon/>}
+                    loadingPosition="start"
+                    loading={response.loading}>
+                    Registrarse
+                </LoadingButton>
             </form>
         </div>
     )

@@ -22,7 +22,7 @@ public class CitizenDB implements java.io.Serializable {
     @Id
     @Column(name = "cid", unique = true, nullable = false)
     @NotNull
-    private int id;
+    private int citizenId;
 
     @Column(name = "name")
     @NotNull

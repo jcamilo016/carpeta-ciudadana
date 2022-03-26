@@ -24,8 +24,6 @@ function ListaDestinatarios() {
         }
     }, [showAlert]);
 
-    console.log(data);
-
     return (
         <>
             {showAlert && (

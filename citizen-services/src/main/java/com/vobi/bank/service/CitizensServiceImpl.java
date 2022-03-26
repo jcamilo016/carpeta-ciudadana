@@ -1,6 +1,7 @@
 package com.vobi.bank.service;
 
 import com.vobi.bank.dto.Citizen;
+import com.vobi.bank.dto.LoginRequest;
 import com.vobi.bank.mapper.CitizenMapper;
 import com.vobi.bank.model.CitizenDB;
 import com.vobi.bank.openfeignclients.CitizensServiceClient;
@@ -31,12 +32,21 @@ public class CitizensServiceImpl implements CitizensService {
     }
 
     @Override
-    public String validateCitizen(int citizenId) throws Exception {
-        String response = citizensServiceClient.validateCitizen(citizenId);
+    public Citizen validateCitizen(LoginRequest request) throws Exception {
+        String response = citizensServiceClient.validateCitizen(request.getCitizenId());
+
         if (StringUtils.isEmpty(response)) {
             throw new Exception("Ciudadano no encontrado");
         } else {
-            return response;
+            CitizenDB citizen = citizenRepository
+                    .findById(request.getCitizenId())
+                    .orElseThrow(()-> new Exception("Ciudadano no encontrado"));
+
+            if (!citizen.getPassword().equals(request.getPassword())) {
+                throw new Exception("Contraseña inválida");
+            }
+
+            return citizenMapper.citizenDBtoCitizen(citizen);
         }
     }
 
@@ -48,13 +58,13 @@ public class CitizensServiceImpl implements CitizensService {
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     public String saveCitizen(CitizenDB citizenDB) throws Exception {
-        String validateResponse = citizensServiceClient.validateCitizen(citizenDB.getId());
+        String validateResponse = citizensServiceClient.validateCitizen(citizenDB.getCitizenId());
         if (StringUtils.isEmpty(validateResponse)) {
             if (Objects.isNull(citizenDB)) {
                 throw new Exception("The citizen entity is null");
             }
 
-            if (citizenRepository.existsById(citizenDB.getId())) {
+            if (citizenRepository.existsById(citizenDB.getCitizenId())) {
                 throw new Exception("Citizen already exists");
             }
 
