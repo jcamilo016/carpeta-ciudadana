@@ -9,7 +9,7 @@ function UseGet(application) {
         error: null,
     });
 
-    const apiCall = useCallback((url, actionCallback = ()=>{}) => {
+    const apiCall = useCallback((url, actionCallback = ()=>{}, errorCallback = ()=>{}) => {
             setResponse((prevState) => ({...prevState, loading: true, error: null}));
 
             API.get(generateUrl(url, application))
@@ -17,7 +17,10 @@ function UseGet(application) {
                     setResponse({data: res.data, loading: false, error: null})
                     actionCallback();
                 })
-                .catch(error => setResponse({data: null, loading: false, error: error.response?.data.error[0] || error}));
+                .catch(error => {
+                    setResponse({data: null, loading: false, error: error.response?.data.error[0] || error});
+                    errorCallback();
+                });
         }
         , [application]);
 

@@ -17,4 +17,10 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 2rem;
+
+  .authentication-section {
+    .MuiLoadingButton-root {
+      background: rgb(34,177,76);
+    }
+  }
 }
