@@ -1,8 +1,13 @@
 import React from "react";
-import {Card, CardContent, CardMedia, Typography} from "@mui/material";
+import {Card, CardActions, CardContent, CardMedia, Typography} from "@mui/material";
 import MaleImage from "../static/styles/images/user_male.svg";
+import LoadingButton from "@mui/lab/LoadingButton";
+import LogoutIcon from '@mui/icons-material/Logout';
+import {useNavigate} from "react-router-dom";
 
 function CitizenCard({id, name, address, email}) {
+    const navigate = useNavigate();
+
     return (
         <Card sx={{maxWidth: 400}} elevation={5}>
             <CardMedia
@@ -25,6 +30,16 @@ function CitizenCard({id, name, address, email}) {
                     {`Email: ${email}`}
                 </Typography>
             </CardContent>
+            <CardActions>
+                <LoadingButton
+                    variant="outlined"
+                    startIcon={<LogoutIcon />}
+                    onClick={() => navigate("/")}
+                    loadingPosition="start"
+                    loading={false} >
+                    Salir
+                </LoadingButton>
+            </CardActions>
         </Card>
     );
 }
