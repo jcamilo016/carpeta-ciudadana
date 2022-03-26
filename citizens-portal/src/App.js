@@ -10,6 +10,7 @@ import {LoginForm, RegisterForm } from "./components";
 import {LoginContext} from "./contexts/LoginContext";
 import './static/styles/App.scss';
 import './static/styles/Login.scss';
+import './static/styles/Documents.scss';
 
 function App() {
     const [loginInfo, setLogin] = useState({isLogged: false, citizen: null});

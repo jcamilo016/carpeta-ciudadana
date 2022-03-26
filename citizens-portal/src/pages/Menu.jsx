@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import SwipeableViews from 'react-swipeable-views';
 import {Box, Container, Tab, Tabs, useTheme} from "@mui/material";
-import {TabPanel, DocumentsList, UploadFileForm} from "../components";
+import {TabPanel, DocumentsList, UploadFileForm, PageLoading} from "../components";
 import {LoginContext} from "../contexts/LoginContext";
 
 function Menu() {
@@ -29,7 +29,7 @@ function Menu() {
         <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
             <Tabs value={value} onChange={handleChange} centered>
                 <Tab label="Lista de documentos" />
-                <Tab label="Cargue de documentos" />
+                <Tab label="Cargar nuevo documento" />
             </Tabs>
             <SwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -38,7 +38,11 @@ function Menu() {
             >
                 <TabPanel value={value} index={0} dir={theme.direction}>
                     <Container maxWidth="80%">
-                        <DocumentsList />
+                        {isLogged ? (
+                            <DocumentsList />
+                        ) : (
+                            <PageLoading />
+                        )}
                     </Container>
                 </TabPanel>
                 <TabPanel value={value} index={1} dir={theme.direction}>

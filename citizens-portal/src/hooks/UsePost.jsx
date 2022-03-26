@@ -9,7 +9,7 @@ function UsePost(url, application) {
         error: null,
     });
 
-    const apiCall = useCallback((payload, actionCallback) => {
+    const apiCall = useCallback((payload, actionCallback = () =>{}) => {
             setResponse((prevState) => ({...prevState, loading: true, error: null}));
 
             API.post(generateUrl(url, application), payload)

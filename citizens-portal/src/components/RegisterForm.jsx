@@ -10,16 +10,29 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import PinIcon from '@mui/icons-material/Pin';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-
+import {useNavigate} from "react-router-dom";
+import Swal from 'sweetalert2';
 
 function RegisterForm() {
     const [showPassword, setShowPassword] = useState(false);
     const [apiCall, response] = UsePost("/register", "citizens");
+    const navigate = useNavigate();
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
 
+    const redirectToLogin = () => {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Ciudadano registrado exitosamente',
+            showConfirmButton: false,
+            timer: 1500
+        });
+        navigate("/");
+    };
+
     const onSubmitHandler = async (payload) => {
-        await apiCall(payload);
+        await apiCall(payload, redirectToLogin);
     };
 
     const formik = useFormik({

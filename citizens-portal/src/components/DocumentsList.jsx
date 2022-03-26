@@ -9,7 +9,13 @@ import Paper from '@mui/material/Paper';
 import {useContext, useEffect} from "react";
 import {LoginContext} from "../contexts/LoginContext";
 import {UseGet} from "../hooks";
-import {Grid, Skeleton, Link} from "@mui/material";
+import {Link} from "@mui/material";
+import {CitizenCard, PageLoading} from "./index";
+import LoadingButton from "@mui/lab/LoadingButton";
+import LoginIcon from "@mui/icons-material/Login";
+import {
+    useLinkClickHandler,
+} from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -37,73 +43,54 @@ function DocumentsList() {
 
     useEffect(() =>{
         apiCall(`/files/${citizen?.id}`);
-    }, []);
-
-    console.log(response);
+    }, [apiCall, citizen]);
 
     return (
         <div>
-            <div>
+            <div className="documents-list-header-container">
                 <h2>{`Bienvenid@ ${citizen.name} al sistema carpeta ciudadana`}</h2>
-            </div>
-            <div>
                 <h4>Estos son sus documentos:</h4>
             </div>
-            {response.data && (
-                <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 700}} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>Nombre</StyledTableCell>
-                                <StyledTableCell>Tamaño (Kb)</StyledTableCell>
-                                <StyledTableCell />
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {response.data.map((row) => (
-                                <StyledTableRow key={row.name}>
-                                    <StyledTableCell component="th" scope="row">
-                                        {row.name}
-                                    </StyledTableCell>
-                                    <StyledTableCell>{row.size / 1000}</StyledTableCell>
-                                    <StyledTableCell><Link href={row.url}>Link de descarga</Link></StyledTableCell>
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            )}
-            {response.loading && (
-                <Grid container spacing={1} justifyContent="center" sx={{marginTop: "25px"}} direction="column" alignItems="center">
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                    <Grid item>
-                        <Skeleton variant="rectangular" width={700} height={40} />
-                    </Grid>
-                </Grid>
-            )}
+            <div className="documents-list-content-container">
+                <CitizenCard {...citizen}/>
+                {response.data && (
+                    <TableContainer component={Paper}>
+                        <Table sx={{minWidth: 700}} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>Nombre</StyledTableCell>
+                                    <StyledTableCell>Tamaño (Kb)</StyledTableCell>
+                                    <StyledTableCell />
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {response.data.map((row) => (
+                                    <StyledTableRow key={row.name}>
+                                        <StyledTableCell component="th" scope="row">
+                                            {row.name}
+                                        </StyledTableCell>
+                                        <StyledTableCell>{row.size / 1000}</StyledTableCell>
+                                        <StyledTableCell>
+                                            <LoadingButton
+                                                variant="contained"
+                                                size="large"
+                                                className="create-button"
+                                                startIcon={<LoginIcon/>}
+                                                loadingPosition="start"
+                                                loading={false}>
+                                                    <Link href={row.url} color="inherit" underline="none">Descargar</Link>
+                                            </LoadingButton>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                )}
+                {response.loading && (
+                    <PageLoading />
+                )}
+            </div>
         </div>
     )
 }
