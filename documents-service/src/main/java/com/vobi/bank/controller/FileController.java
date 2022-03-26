@@ -61,14 +61,14 @@ public class FileController {
     @GetMapping("/files/{citizenId}")
     public ResponseEntity<List<ResponseFile>> getCitizenListFiles(@PathVariable("citizenId") int citizenId) throws Exception {
         List<ResponseFile> files = storageService.findCitizenFiles(citizenId).stream().map(dbFile -> {
-            String fileDownloadUri = ServletUriComponentsBuilder
+/*            String fileDownloadUri = ServletUriComponentsBuilder
                     .fromCurrentContextPath()
                     .path("/api/v1/documents/file/")
                     .path(dbFile.getId())
-                    .toUriString();
+                    .toUriString();*/
             return new ResponseFile(
                     dbFile.getName(),
-                    fileDownloadUri,
+                    "http://localhost/documents/api/v1/documents/file/" + dbFile.getId(),
                     dbFile.getType(),
                     dbFile.getData().length);
         }).collect(Collectors.toList());
