@@ -51,8 +51,8 @@ function DocumentsList() {
     const onErrorAuthentication = () => {
         Swal.fire({
             position: 'center',
-            icon: 'success',
-            title: 'Documento autenticado exitosamente',
+            icon: 'error',
+            title: 'Ocurrió un error al autenticar el documento',
             showConfirmButton: false,
             timer: 2000
         });

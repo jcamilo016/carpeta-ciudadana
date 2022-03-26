@@ -24,3 +24,14 @@
     }
   }
 }
+.upload-image-container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  margin: 3rem;
+
+  .drop-area-customized {
+    width: 100vh;
+  }
+}
