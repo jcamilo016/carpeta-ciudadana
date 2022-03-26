@@ -12,10 +12,8 @@ import {UseGet} from "../hooks";
 import {Link} from "@mui/material";
 import {CitizenCard, PageLoading} from "./index";
 import LoadingButton from "@mui/lab/LoadingButton";
-import LoginIcon from "@mui/icons-material/Login";
-import {
-    useLinkClickHandler,
-} from "react-router-dom";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -61,6 +59,7 @@ function DocumentsList() {
                                     <StyledTableCell>Nombre</StyledTableCell>
                                     <StyledTableCell>Tamaño (Kb)</StyledTableCell>
                                     <StyledTableCell />
+                                    <StyledTableCell />
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -75,10 +74,21 @@ function DocumentsList() {
                                                 variant="contained"
                                                 size="large"
                                                 className="create-button"
-                                                startIcon={<LoginIcon/>}
+                                                startIcon={<CloudDownloadIcon />}
                                                 loadingPosition="start"
                                                 loading={false}>
                                                     <Link href={row.url} color="inherit" underline="none">Descargar</Link>
+                                            </LoadingButton>
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                            <LoadingButton
+                                                variant="contained"
+                                                size="large"
+                                                className="create-button"
+                                                startIcon={<CheckCircleIcon />}
+                                                loadingPosition="start"
+                                                loading={false}>
+                                                <Link href={row.url} color="inherit" underline="none">Autenticar</Link>
                                             </LoadingButton>
                                         </StyledTableCell>
                                     </StyledTableRow>
